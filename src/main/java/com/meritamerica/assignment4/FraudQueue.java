@@ -2,6 +2,8 @@ package com.meritamerica.assignment4;
 
 public class FraudQueue {
 	
+	// array of transactions here.
+	
 	FraudQueue(){
 		
 	}

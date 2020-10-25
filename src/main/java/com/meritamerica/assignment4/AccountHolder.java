@@ -24,6 +24,9 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	private CheckingAccount[] checkAccounts = new CheckingAccount[0];
 	private SavingsAccount[] saveAccounts = new SavingsAccount[0];
 	private CDAccount[] cdAccounts = new CDAccount[0];
+	public Transaction[] transactionQueue = new Transaction[0];
+	//public FraudQueue fraudQueue;
+	public FraudQueue[] fraudQueue = new FraudQueue[0];
 	private static long nextAccountNumber;
 
 	/*
@@ -36,6 +39,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		this.lastName = lastName;
 		this.ssn = ssn;
 		this.nextAccountNumber = 0;
+		//this.fraudQueue = new FraudQueue();
 	}
 
 	/*

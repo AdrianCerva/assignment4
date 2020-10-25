@@ -28,7 +28,7 @@ public class MeritBank {
 
 	static AccountHolder[] accountHolders = new AccountHolder[0];
 	static CDOffering[] cdOfferings = new CDOffering[0];
-	//static Transaction[] fraudQueue = new Transaction[0];
+	
 	static long nextAccountNumber = 0;
 
 // Account Holder Methods //=================================================================================

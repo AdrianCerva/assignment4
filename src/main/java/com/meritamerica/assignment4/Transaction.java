@@ -57,6 +57,13 @@ public abstract class Transaction {
 		
 	}
 	
+	/*
+	 * process
+	 * 
+	 * This is an abstract method that gets written in any class that extends this class.
+	 * 
+	 * 
+	 */
 	public abstract void process() throws NegativeAmountException,
 	ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException;
 		
