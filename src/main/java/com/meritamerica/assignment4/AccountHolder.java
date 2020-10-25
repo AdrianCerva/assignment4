@@ -102,8 +102,8 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		if (getCombinedBalance() + openingBalance >= MAX_ALLOWED) {
 			throw new ExceedsCombinedBalanceLimitException("You have reached the maximum total balance across all accounts. Cannot create another.");
 			
-			
 		} else {
+			
 			return addCheckingAccount(newname);
 		}
 

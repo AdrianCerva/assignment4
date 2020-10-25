@@ -28,6 +28,7 @@ public class MeritBank {
 
 	static AccountHolder[] accountHolders = new AccountHolder[0];
 	static CDOffering[] cdOfferings = new CDOffering[0];
+	//static Transaction[] fraudQueue = new Transaction[0];
 	static long nextAccountNumber = 0;
 
 // Account Holder Methods //=================================================================================
@@ -144,80 +145,6 @@ public class MeritBank {
 	 * AccountHolders.
 	 */
 	
-	/*
-	static boolean readFromFile(String fileName) {
-
-		File textFile = new File(fileName);
-		
-		try {
-			// Set up the file to be read from, the file reader, and the buffered reader:
-			
-			FileReader reader = new FileReader(textFile);
-			BufferedReader bufferedReader = new BufferedReader(reader);
-
-			// Set the next available account number:
-			setNextAccountNumber(Integer.valueOf(bufferedReader.readLine()));
-
-			// Create a new CDOffering array to replace the old one:
-			CDOffering[] newOfferings = new CDOffering[Integer.valueOf(bufferedReader.readLine())];
-			// Make x amount of CDofferings:
-			for (int i = 0; i < newOfferings.length; i++) {
-				newOfferings[i] = CDOffering.readFromString(bufferedReader.readLine());
-			}
-			// Overwrite the old cdOfferings with the new one:
-			cdOfferings = newOfferings;
-
-			// Create a new account holder array based on the number of accounts in the
-			// file:
-			AccountHolder[] newAccountHolderArray = new AccountHolder[Integer.valueOf(bufferedReader.readLine())];
-
-			// Now loop through the file and fill up the account holder and its bank
-			// accounts:
-			for (int i = 0; i < newAccountHolderArray.length; i++) {
-
-				// Add the account holder to the temporary array:
-				newAccountHolderArray[i] = AccountHolder.readFromString(bufferedReader.readLine());
-
-				// Read x amount of checking accounts:
-
-				for (int j = 0; j < Integer.valueOf(bufferedReader.readLine()); j++) {
-					newAccountHolderArray[i]
-							.addCheckingAccount(CheckingAccount.readFromString(bufferedReader.readLine()));
-				}
-
-				// Read x amount of savings accounts:
-				for (int k = 0; k < Integer.valueOf(bufferedReader.readLine()); k++) {
-					newAccountHolderArray[i]
-							.addSavingsAccount(SavingsAccount.readFromString(bufferedReader.readLine()));
-				}
-
-				// Read x amount of cd accounts:
-				for (int l = 0; l < Integer.valueOf(bufferedReader.readLine()); l++) {
-					newAccountHolderArray[i].addCDAccount(CDAccount.readFromString(bufferedReader.readLine()));
-				}
-
-			}
-
-			// Close the reader:
-			reader.close();
-			return true;
-		} catch (IOException e) {
-			System.out.println("File was not found.");
-			//return false;
-		} catch (ParseException e) {
-			// throw new java.io.IOException();
-			System.out.println("Parse exception.");
-			//return false;
-		} catch (NumberFormatException e) {
-			System.out.println("Format error.");
-			// throw new java.lang.NumberFormatException();
-			//return false;
-		}
-		return false;
-	}
-
-*/
-	
 	public static boolean readFromFile(String fileName) {
 		File input = new File(fileName);
 
@@ -326,14 +253,6 @@ public class MeritBank {
 	}
 	
 	public static BankAccount getBankAccount(long accountId) {
-		
-	}
-	
-	static boolean readFromFile(String fileName) {
-		
-	}
-	
-	static boolean writeToFile(String fileName) {
 		
 	}
 }

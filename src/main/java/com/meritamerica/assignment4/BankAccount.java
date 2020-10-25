@@ -14,7 +14,7 @@ public abstract class BankAccount {
 	public long accountNumber;
 	public double interestRate;
 	public Date startDate;
-	
+	public Transaction[] transactionQueue = new Transaction[0];
 	static private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 	
 	/*
