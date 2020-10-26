@@ -1,7 +1,9 @@
 package com.meritamerica.assignment4;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.List;
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class BankAccount {
@@ -14,7 +16,8 @@ public abstract class BankAccount {
 	public long accountNumber;
 	public double interestRate;
 	public Date startDate;
-	static private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	//static private SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	private List<Transaction> transactionList = new ArrayList<Transaction>();
 	
 	/*
 	 * Constructors:
@@ -22,13 +25,13 @@ public abstract class BankAccount {
 	
 	public BankAccount(double balance) {
 		this.accountBalance = balance;
-		this.accountNumber = AccountHolder.getNewAccountNumber();
+		this.accountNumber = MeritBank.getNextAccountNumber();
 	}
 	
 	public BankAccount(double balance, double interestRate) {
 		this.accountBalance = balance;
 		this.interestRate = interestRate;
-		this.accountNumber = AccountHolder.getNewAccountNumber();
+		this.accountNumber = MeritBank.getNextAccountNumber();
 	}
 	
 	public BankAccount(long accountNumber, double balance, double interestRate) {
@@ -82,6 +85,8 @@ public abstract class BankAccount {
 			return false;
 		} else {
 			this.accountBalance += amount;
+			DepositTransaction transaction = new DepositTransaction(this, amount);
+			transactionList.add(transaction);
 			System.out.println("Deposited $" + amount + " into your account.");
 			return true;
 		}
@@ -92,7 +97,7 @@ public abstract class BankAccount {
 	}
 	
 	public double futureValue(int years) {
-		return getBalance() * (Math.pow(1 + getInterestRate(), years));
+		return MeritBank.recursiveFutureValue(accountBalance, years, getInterestRate());
 	}
 	
 	public double getInterestRate() {
@@ -112,23 +117,7 @@ public abstract class BankAccount {
 		double truncatedDouble = (double)truncatedInt / 100;
 		return truncatedDouble;
 	}
-	
-	public static BankAccount readFromString(String accountData) throws ParseException {
-		try {
-			
-		
-		String[] accountInfo = accountData.split(",");
-		
-		long accountNumber = Long.valueOf(accountInfo[0]);
-		double accountBalance = Double.valueOf(accountInfo[1]);
-		double interestRate = Double.valueOf(accountInfo[2]);
-		Date startDate = formatter.parse(accountInfo[3]);
-		//return new BankAccount();
-		return new BankAccount(accountNumber,accountBalance,interestRate,startDate);
-		} catch (ParseException e){
-			return null;
-		}
-	}
+
 	
 	public String writeToString() {
 		String newString = this.accountNumber + "," + this.accountBalance + "," + this.interestRate + "," + this.startDate;
@@ -143,11 +132,12 @@ public abstract class BankAccount {
 	}
 	
 	public void addTransaction(Transaction transaction) {
-		
+		this.transactionList.add(transaction);
 	}
 	
-	public List<Transaction> getTransactions(){
-		
+	public List<Transaction> getTransactions() {
+		return this.transactionList;
 	}
+	
 	
 }

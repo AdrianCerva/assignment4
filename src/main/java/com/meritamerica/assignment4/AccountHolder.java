@@ -24,10 +24,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	private CheckingAccount[] checkAccounts = new CheckingAccount[0];
 	private SavingsAccount[] saveAccounts = new SavingsAccount[0];
 	private CDAccount[] cdAccounts = new CDAccount[0];
-	public Transaction[] transactionQueue = new Transaction[0];
-	//public FraudQueue fraudQueue;
-	public FraudQueue[] fraudQueue = new FraudQueue[0];
-	private static long nextAccountNumber;
+	// public FraudQueue[] fraudQueue = new FraudQueue[0];
 
 	/*
 	 * Constructors:
@@ -38,8 +35,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		this.middleName = middleName;
 		this.lastName = lastName;
 		this.ssn = ssn;
-		this.nextAccountNumber = 0;
-		//this.fraudQueue = new FraudQueue();
+		// this.fraudQueue = new FraudQueue();
 	}
 
 	/*
@@ -104,19 +100,22 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		CheckingAccount newname = new CheckingAccount(openingBalance);
 
 		if (getCombinedBalance() + openingBalance >= MAX_ALLOWED) {
-			throw new ExceedsCombinedBalanceLimitException("You have reached the maximum total balance across all accounts. Cannot create another.");
-			
+			throw new ExceedsCombinedBalanceLimitException(
+					"You have reached the maximum total balance across all accounts. Cannot create another.");
 		} else {
-			
+			// Add transaction:
+			DepositTransaction newTransaction = new DepositTransaction(newname, openingBalance);
 			return addCheckingAccount(newname);
 		}
 
 	}
 
-	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount) throws ExceedsCombinedBalanceLimitException {
+	public CheckingAccount addCheckingAccount(CheckingAccount checkingAccount)
+			throws ExceedsCombinedBalanceLimitException {
 		if (getCombinedBalance() + checkingAccount.getBalance() >= MAX_ALLOWED) {
-			
-			throw new ExceedsCombinedBalanceLimitException("You have reached the maximum total balance across all accounts. Cannot create another.");
+
+			throw new ExceedsCombinedBalanceLimitException(
+					"You have reached the maximum total balance across all accounts. Cannot create another.");
 //			return null;
 		} else {
 			CheckingAccount[] newArray = new CheckingAccount[checkAccounts.length + 1];
@@ -164,24 +163,30 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		return total;
 	}
 
-	public SavingsAccount addSavingsAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException{
+	public SavingsAccount addSavingsAccount(double openingBalance) throws ExceedsCombinedBalanceLimitException {
 		SavingsAccount newname = new SavingsAccount(openingBalance);
 
+		// if (openingBalance > 1000.0) {
+		// throw new ExceedsFraudSuspicionLimitException("Amount exceeds $1,000. Fraud
+		// team notified.");
+		// }
 		if (getCombinedBalance() + openingBalance >= MAX_ALLOWED) {
-			
-			throw new ExceedsCombinedBalanceLimitException("You have reached the maximum total balance across all accounts. Cannot create another.");
 
-//			return null;
+			throw new ExceedsCombinedBalanceLimitException(
+					"You have reached the maximum total balance across all accounts. Cannot create another.");
+
 		} else {
+			// Add a deposit transaction:
+			DepositTransaction newTransaction = new DepositTransaction(newname, openingBalance);
 			return addSavingsAccount(newname);
 		}
 	}
 
 	public SavingsAccount addSavingsAccount(SavingsAccount savingsAccount) throws ExceedsCombinedBalanceLimitException {
 		if (getCombinedBalance() + savingsAccount.getBalance() >= MAX_ALLOWED) {
-			throw new ExceedsCombinedBalanceLimitException("You have reached the maximum total balance across all accounts. Cannot create another.");
+			throw new ExceedsCombinedBalanceLimitException(
+					"You have reached the maximum total balance across all accounts. Cannot create another.");
 
-			
 //			return null;
 		} else {
 			SavingsAccount[] newArray = new SavingsAccount[saveAccounts.length + 1];
@@ -224,8 +229,16 @@ public class AccountHolder implements Comparable<AccountHolder> {
 		return cdAccount;
 	}
 
-	public CDAccount addCDAccount(CDOffering offering, double openingBalance) {
+	public CDAccount addCDAccount(CDOffering offering, double openingBalance)
+			throws ExceedsFraudSuspicionLimitException {
+
+		if (openingBalance > 1000) {
+			throw new ExceedsFraudSuspicionLimitException(
+					"The opening balance has exceeded the fraud suspicion limit.");
+		}
+
 		CDAccount newName = new CDAccount(offering, openingBalance);
+		DepositTransaction newTransaction = new DepositTransaction(newName, openingBalance);
 		return addCDAccount(newName);
 	}
 
@@ -268,11 +281,6 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	public String toString() {
 		return "Name: " + this.firstName + " " + this.middleName + " " + this.lastName + "\n" + "SSN: " + this.ssn
 				+ "\n" + this.getCheckingAccounts().toString();
-	}
-
-	public static long getNewAccountNumber() {
-
-		return nextAccountNumber += 1;
 	}
 
 	public static AccountHolder readFromString(String accountHolderData) throws ParseException {
