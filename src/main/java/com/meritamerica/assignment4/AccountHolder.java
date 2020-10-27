@@ -239,6 +239,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 
 		CDAccount newName = new CDAccount(offering, openingBalance);
 		DepositTransaction newTransaction = new DepositTransaction(newName, openingBalance);
+		
 		return addCDAccount(newName);
 	}
 

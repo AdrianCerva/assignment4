@@ -68,7 +68,7 @@ public abstract class Transaction {
 	 */
 	
 	public String writeToString() {
-		return null; // NEED TO WRITE //////////////////////////////////////
+		return this.sourceAccount + "," + this.targetAccount + "," + this.amount + "," + this.transactionDate;
 	}
 	
 	/*

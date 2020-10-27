@@ -176,24 +176,50 @@ public class MeritBank {
 				for (int j = 0; j < newCheckingAccounts.length; j++) {
 					newAccountHolders[i].addCheckingAccount(CheckingAccount.readFromString(bufferRead.readLine()));
 
-					// Set up transactions for checking account:
+					// Set up transactions for checking accounts:
 					ArrayList<Transaction> transactions = new ArrayList<Transaction>();
-					for (int k = 0; k < Integer.valueOf(bufferRead.readLine()); k++) {
+					int counter = Integer.valueOf(bufferRead.readLine());
+
+					for (int k = 0; k < counter; k++) {
 						transactions.add(Transaction.readFromString(bufferRead.readLine()));
-						
 					}
 				}
 
 				SavingsAccount[] newSavingsAccounts = new SavingsAccount[Integer.valueOf(bufferRead.readLine())];
 				for (int j = 0; j < newSavingsAccounts.length; j++) {
 					newAccountHolders[i].addSavingsAccount(SavingsAccount.readFromString(bufferRead.readLine()));
+
+					// Set up transactions for savings accounts:
+					ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+					int counter = Integer.valueOf(bufferRead.readLine());
+
+					for (int k = 0; k < counter; k++) {
+						transactions.add(Transaction.readFromString(bufferRead.readLine()));
+					}
 				}
 
 				CDAccount[] newCDAccounts = new CDAccount[Integer.valueOf(bufferRead.readLine())];
 				for (int j = 0; j < newCDAccounts.length; j++) {
 					newAccountHolders[i].addCDAccount(CDAccount.readFromString(bufferRead.readLine()));
+
+					// Set up transactions for cd accounts:
+					ArrayList<Transaction> transactions = new ArrayList<Transaction>();
+					int counter = Integer.valueOf(bufferRead.readLine());
+
+					for (int k = 0; k < counter; k++) {
+						transactions.add(Transaction.readFromString(bufferRead.readLine()));
+					}
 				}
 			}
+
+			// Get the fraud transactions:
+			List<Transaction> fraudTransactions = new ArrayList<Transaction>();
+			int counter = Integer.valueOf(bufferRead.readLine());
+
+			for (int i = 0; i < counter; i++) {
+				fraudTransactions.add(Transaction.readFromString(bufferRead.readLine()));
+			}
+
 			accountHolders = newAccountHolders;
 
 			return true;

@@ -31,7 +31,6 @@ public class CDOffering {
 	
 	public static CDOffering readFromString(String cdOfferingDataString) {
         String[] str = cdOfferingDataString.split(",");
-        //System.out.println(str[0] + " " + str[1]);
         return new CDOffering(Integer.parseInt(str[0]), Double.parseDouble(str[1]));
     }
 
